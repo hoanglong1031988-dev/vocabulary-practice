@@ -1,7 +1,164 @@
 <!DOCTYPE html>
-<html>
-<body style="background:red; text-align:center; color:white;">
-  <h1>🔥 NEW VERSION 🔥</h1>
-  <p>If you see this, cache is cleared</p>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fun Vocabulary Game</title>
+
+  <style>
+    body {
+      font-family: "Comic Sans MS", Arial;
+      background: #e3f2fd;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff6f00;
+      padding: 15px;
+    }
+
+    .score {
+      text-align: center;
+      font-size: 22px;
+      color: #2e7d32;
+      margin-bottom: 10px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+    }
+
+    .side {
+      width: 25%;
+      background: #bbdefb;
+      border-radius: 20px;
+      padding: 15px;
+      margin: 5px;
+    }
+
+    .side h3 {
+      text-align: center;
+      color: #0d47a1;
+    }
+
+    .main {
+      width: 45%;
+    }
+
+    .card {
+      background: white;
+      margin: 15px auto;
+      padding: 20px;
+      border-radius: 25px;
+      box-shadow: 0 6px 10px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    .word {
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    button {
+      display: block;
+      width: 85%;
+      margin: 10px auto;
+      padding: 12px;
+      font-size: 18px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      background: #4caf50;
+      color: white;
+    }
+
+    button:hover {
+      background: #388e3c;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🌈 Fun Vocabulary Game 🌈</h1>
+
+  <div class="score">
+    ⭐ Score: <span id="score">0</span>
+  </div>
+
+  <div class="container">
+
+    <!-- LEFT SIDE -->
+    <div class="side">
+      <h3>📘 Instructions</h3>
+      <p>👉 Click the word to hear it</p>
+      <p>👉 Choose the correct meaning</p>
+      <p>👉 Get +10 points</p>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+
+      <div class="card">
+        <div class="word" onclick="speak('apple')">🍎 Apple 🔊</div>
+        <p>Apple means...</p>
+
+        <button onclick="correct()">Quả táo</button>
+        <button onclick="wrong()">Quả chuối</button>
+        <button onclick="wrong()">Quả cam</button>
+      </div>
+
+      <div class="card">
+        <div class="word" onclick="speak('dog')">🐶 Dog 🔊</div>
+        <p>Dog means...</p>
+
+        <button onclick="correct()">Con chó</button>
+        <button onclick="wrong()">Con mèo</button>
+        <button onclick="wrong()">Con vịt</button>
+      </div>
+
+      <div class="card">
+        <div class="word" onclick="speak('book')">📘 Book 🔊</div>
+        <p>Book means...</p>
+
+        <button onclick="correct()">Quyển sách</button>
+        <button onclick="wrong()">Cây bút</button>
+        <button onclick="wrong()">Cái bàn</button>
+      </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="side">
+      <h3>🏆 Motivation</h3>
+      <p>🌟 10 points = Good!</p>
+      <p>🌟 30 points = Great!</p>
+      <p>🌟 50 points = Excellent!</p>
+    </div>
+
+  </div>
+
+  <script>
+    let score = 0;
+
+    function correct() {
+      score += 10;
+      document.getElementById("score").innerText = score;
+      alert("🎉 Correct! +10 points");
+    }
+
+    function wrong() {
+      alert("❌ Try again!");
+    }
+
+    function speak(word) {
+      const utterance = new SpeechSynthesisUtterance(word);
+      utterance.lang = "en-US";
+      speechSynthesis.speak(utterance);
+    }
+  </script>
+
 </body>
 </html>
