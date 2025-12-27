@@ -2,52 +2,108 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Vocabulary Practice</title>
+  <title>Vocabulary Game</title>
+
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f0f8ff;
+      font-family: "Comic Sans MS", Arial;
+      background: #e0f7fa;
       text-align: center;
     }
+
+    h1 {
+      color: #ff5722;
+    }
+
+    .score {
+      font-size: 22px;
+      margin: 15px;
+      color: #2e7d32;
+    }
+
     .card {
       background: white;
-      padding: 20px;
+      width: 320px;
       margin: 20px auto;
-      width: 300px;
-      border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 6px 10px rgba(0,0,0,0.2);
     }
+
     button {
-      padding: 10px 15px;
-      margin-top: 10px;
-      font-size: 16px;
-      border-radius: 10px;
+      display: block;
+      width: 80%;
+      margin: 10px auto;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 15px;
       border: none;
-      background: #4CAF50;
-      color: white;
       cursor: pointer;
+      background: #4caf50;
+      color: white;
+    }
+
+    button:hover {
+      background: #388e3c;
     }
   </style>
 </head>
 
 <body>
-  <h1>🌈 Vocabulary Practice 🌈</h1>
 
-  <div class="card">
-    <h2>Apple 🍎</h2>
-    <p>→ quả táo</p>
-    <button onclick="alert('Apple means quả táo!')">
-      Check
-    </button>
+  <h1>🎉 Vocabulary Game 🎉</h1>
+
+  <div class="score">
+    ⭐ Score: <span id="score">0</span>
   </div>
 
+  <!-- QUESTION 1 -->
   <div class="card">
-    <h2>Dog 🐶</h2>
-    <p>→ con chó</p>
-    <button onclick="alert('Dog means con chó!')">
-      Check
-    </button>
+    <h2>🍎 Apple</h2>
+    <p>Apple means...</p>
+
+    <button onclick="correct()">Quả táo</button>
+    <button onclick="wrong()">Quả chuối</button>
+    <button onclick="wrong()">Quả cam</button>
   </div>
+
+  <!-- QUESTION 2 -->
+  <div class="card">
+    <h2>🐶 Dog</h2>
+    <p>Dog means...</p>
+
+    <button onclick="correct()">Con chó</button>
+    <button onclick="wrong()">Con mèo</button>
+    <button onclick="wrong()">Con vịt</button>
+  </div>
+
+  <!-- QUESTION 3 -->
+  <div class="card">
+    <h2>📘 Book</h2>
+    <p>Book means...</p>
+
+    <button onclick="correct()">Quyển sách</button>
+    <button onclick="wrong()">Cây bút</button>
+    <button onclick="wrong()">Cái bàn</button>
+  </div>
+
+  <script>
+    let score = 0;
+
+    function correct() {
+      score += 10;
+      document.getElementById("score").innerText = score;
+      alert("🎉 Correct! +10 points");
+    }
+
+    function wrong() {
+      alert("❌ Try again!");
+    }
+  </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
