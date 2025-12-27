@@ -2,92 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Vocabulary Game</title>
+  <title>Fun Vocabulary Game</title>
 
   <style>
     body {
       font-family: "Comic Sans MS", Arial;
-      background: #e0f7fa;
-      text-align: center;
+      background: #e3f2fd;
+      margin: 0;
     }
 
     h1 {
-      color: #ff5722;
+      text-align: center;
+      color: #ff6f00;
+      padding: 15px;
     }
 
     .score {
+      text-align: center;
       font-size: 22px;
-      margin: 15px;
       color: #2e7d32;
+      margin-bottom: 10px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+    }
+
+    .side {
+      width: 25%;
+      background: #bbdefb;
+      border-radius: 20px;
+      padding: 15px;
+      margin: 5px;
+    }
+
+    .side h3 {
+      text-align: center;
+      color: #0d47a1;
+    }
+
+    .main {
+      width: 45%;
     }
 
     .card {
       background: white;
-      width: 320px;
-      margin: 20px auto;
-      padding: 20px;
-      border-radius: 20px;
-      box-shadow: 0 6px 10px rgba(0,0,0,0.2);
-    }
-
-    button {
-      display: block;
-      width: 80%;
-      margin: 10px auto;
-      padding: 10px;
-      font-size: 18px;
-      border-radius: 15px;
-      border: none;
-      cursor: pointer;
-      background: #4caf50;
-      color: white;
-    }
-
-    button:hover {
-      background: #388e3c;
-    }
-  </style>
-</head>
-
-<body>
-
-  <h1>🎉 Vocabulary Game 🎉</h1>
-
-  <div class="score">
-    ⭐ Score: <span id="score">0</span>
-  </div>
-
-  <div class="card">
-    <h2>🍎 Apple</h2>
-    <p>Apple means...</p>
-
-    <button onclick="correct()">Quả táo</button>
-    <button onclick="wrong()">Quả chuối</button>
-    <button onclick="wrong()">Quả cam</button>
-  </div>
-
-  <div class="card">
-    <h2>🐶 Dog</h2>
-    <p>Dog means...</p>
-
-    <button onclick="correct()">Con chó</button>
-    <button onclick="wrong()">Con mèo</button>
-    <button onclick="wrong()">Con vịt</button>
-  </div>
-
-  <script>
-    let score = 0;
-
-    function correct() {
-      score += 10;
-      document.getElementById("score").innerText = score;
-      alert("🎉 Correct! +10 points");
-    }
-
-    function wrong() {
-      alert("❌ Try again!");
-    }
-  </script>
-
-</body>
-</html>
+      margin: 15px auto;
