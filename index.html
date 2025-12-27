@@ -2,69 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Fun Vocabulary Game</title>
+  <title>Vocabulary Game</title>
 
   <style>
     body {
       font-family: "Comic Sans MS", Arial;
       background: #e3f2fd;
+      text-align: center;
       margin: 0;
     }
 
-    h1 {
-      text-align: center;
-      color: #ff6f00;
-      padding: 15px;
-    }
+    h1 { color: #ff6f00; }
 
     .score {
-      text-align: center;
       font-size: 22px;
       color: #2e7d32;
-      margin-bottom: 10px;
-    }
-
-    .container {
-      display: flex;
-      justify-content: space-between;
-      padding: 10px;
-    }
-
-    .side {
-      width: 25%;
-      background: #bbdefb;
-      border-radius: 20px;
-      padding: 15px;
-      margin: 5px;
-    }
-
-    .side h3 {
-      text-align: center;
-      color: #0d47a1;
-    }
-
-    .main {
-      width: 45%;
+      margin: 10px;
     }
 
     .card {
       background: white;
+      width: 340px;
       margin: 15px auto;
       padding: 20px;
       border-radius: 25px;
       box-shadow: 0 6px 10px rgba(0,0,0,0.2);
-      text-align: center;
-    }
-
-    .word {
-      font-size: 28px;
-      cursor: pointer;
     }
 
     button {
-      display: block;
-      width: 85%;
-      margin: 10px auto;
+      width: 90%;
+      margin: 8px auto;
       padding: 12px;
       font-size: 18px;
       border-radius: 20px;
@@ -72,93 +39,138 @@
       cursor: pointer;
       background: #4caf50;
       color: white;
+      display: block;
     }
 
-    button:hover {
-      background: #388e3c;
+    .wrong { background: #f44336; }
+    .teacher { background: #1976d2; }
+
+    input {
+      width: 90%;
+      padding: 8px;
+      margin: 5px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .word {
+      font-size: 28px;
+      cursor: pointer;
     }
   </style>
 </head>
 
 <body>
 
-  <h1>🌈 Fun Vocabulary Game 🌈</h1>
+<h1>🌈 Vocabulary Game 🌈</h1>
+<div class="score">⭐ Score: <span id="score">0</span></div>
 
-  <div class="score">
-    ⭐ Score: <span id="score">0</span>
+<!-- STUDENT MODE -->
+<div id="student" class="card">
+  <div class="word" onclick="speak(current.word)">
+    🔊 <span id="word"></span>
   </div>
 
-  <div class="container">
+  <div id="answers"></div>
+</div>
 
-    <!-- LEFT SIDE -->
-    <div class="side">
-      <h3>📘 Instructions</h3>
-      <p>👉 Click the word to hear it</p>
-      <p>👉 Choose the correct meaning</p>
-      <p>👉 Get +10 points</p>
-    </div>
+<!-- TEACHER MODE -->
+<div class="card">
+  <h3>🔑 Teacher Mode</h3>
 
-    <!-- MAIN CONTENT -->
-    <div class="main">
+  <input id="tWord" placeholder="Word (e.g. apple)">
+  <input id="tCorrect" placeholder="Correct meaning">
+  <input id="tWrong1" placeholder="Wrong answer 1">
+  <input id="tWrong2" placeholder="Wrong answer 2">
 
-      <div class="card">
-        <div class="word" onclick="speak('apple')">🍎 Apple 🔊</div>
-        <p>Apple means...</p>
+  <button class="teacher" onclick="addQuestion()">➕ Add Question</button>
+  <button class="teacher" onclick="resetGame()">🔄 Reset Game</button>
 
-        <button onclick="correct()">Quả táo</button>
-        <button onclick="wrong()">Quả chuối</button>
-        <button onclick="wrong()">Quả cam</button>
-      </div>
+  <p id="total"></p>
+</div>
 
-      <div class="card">
-        <div class="word" onclick="speak('dog')">🐶 Dog 🔊</div>
-        <p>Dog means...</p>
+<script>
+  let questions = JSON.parse(localStorage.getItem("questions")) || [];
+  let index = 0;
+  let score = 0;
+  let current = null;
 
-        <button onclick="correct()">Con chó</button>
-        <button onclick="wrong()">Con mèo</button>
-        <button onclick="wrong()">Con vịt</button>
-      </div>
+  function addQuestion() {
+    const q = {
+      word: tWord.value,
+      correct: tCorrect.value,
+      wrong: [tWrong1.value, tWrong2.value]
+    };
 
-      <div class="card">
-        <div class="word" onclick="speak('book')">📘 Book 🔊</div>
-        <p>Book means...</p>
-
-        <button onclick="correct()">Quyển sách</button>
-        <button onclick="wrong()">Cây bút</button>
-        <button onclick="wrong()">Cái bàn</button>
-      </div>
-
-    </div>
-
-    <!-- RIGHT SIDE -->
-    <div class="side">
-      <h3>🏆 Motivation</h3>
-      <p>🌟 10 points = Good!</p>
-      <p>🌟 30 points = Great!</p>
-      <p>🌟 50 points = Excellent!</p>
-    </div>
-
-  </div>
-
-  <script>
-    let score = 0;
-
-    function correct() {
-      score += 10;
-      document.getElementById("score").innerText = score;
-      alert("🎉 Correct! +10 points");
+    if (!q.word || !q.correct) {
+      alert("Please fill at least word and correct answer");
+      return;
     }
 
-    function wrong() {
+    questions.push(q);
+    localStorage.setItem("questions", JSON.stringify(questions));
+
+    tWord.value = tCorrect.value = tWrong1.value = tWrong2.value = "";
+    total.innerText = "Total questions: " + questions.length;
+
+    alert("✅ Question added!");
+    loadQuestion();
+  }
+
+  function loadQuestion() {
+    if (questions.length === 0) {
+      word.innerText = "No questions yet";
+      answers.innerHTML = "";
+      return;
+    }
+
+    current = questions[index % questions.length];
+    word.innerText = current.word;
+
+    let options = [current.correct, ...current.wrong];
+    options.sort(() => Math.random() - 0.5);
+
+    answers.innerHTML = "";
+    options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.innerText = opt;
+      btn.onclick = () => checkAnswer(opt);
+      answers.appendChild(btn);
+    });
+  }
+
+  function checkAnswer(ans) {
+    if (ans === current.correct) {
+      score += 10;
+      alert("🎉 Correct!");
+    } else {
       alert("❌ Try again!");
     }
 
-    function speak(word) {
-      const utterance = new SpeechSynthesisUtterance(word);
-      utterance.lang = "en-US";
-      speechSynthesis.speak(utterance);
+    document.getElementById("score").innerText = score;
+    index++;
+    loadQuestion();
+  }
+
+  function speak(text) {
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    speechSynthesis.speak(u);
+  }
+
+  function resetGame() {
+    if (confirm("Clear all questions?")) {
+      localStorage.clear();
+      location.reload();
     }
-  </script>
+  }
+
+  window.onload = () => {
+    total.innerText = "Total questions: " + questions.length;
+    loadQuestion();
+  };
+</script>
 
 </body>
 </html>
