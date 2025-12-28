@@ -45,3 +45,102 @@ button {
 
 .answers {
   display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.red { background:#e21b3c; }
+.blue { background:#1368ce; }
+.yellow { background:#f2a900; color:black; }
+.green { background:#26890c; }
+
+img {
+  max-width: 300px;
+  border-radius: 15px;
+  margin: 10px 0;
+}
+</style>
+</head>
+
+<body>
+
+<section id="teacher">
+  <h1>👩‍🏫 Teacher Mode (No Code)</h1>
+
+  <p><b>One question per block</b></p>
+  <p>Format:</p>
+  <pre>
+Question?
+Image link (or leave empty)
+Answer A
+Answer B
+Answer C
+Answer D
+Correct answer number (0-3)
+  </pre>
+
+  <textarea id="input" rows="12">
+What animal is this?
+https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg
+Dog
+Cat
+Bird
+Fish
+1
+  </textarea>
+
+  <button class="start" onclick="startQuiz()">▶ Start Quiz</button>
+</section>
+
+<section id="student" style="display:none;">
+  <h1 id="question"></h1>
+  <img id="pic" src="">
+  <div class="answers">
+    <button class="red" onclick="answer(0)"></button>
+    <button class="blue" onclick="answer(1)"></button>
+    <button class="yellow" onclick="answer(2)"></button>
+    <button class="green" onclick="answer(3)"></button>
+  </div>
+</section>
+
+<script>
+let quiz = [];
+let current = 0;
+
+function startQuiz() {
+  const lines = document.getElementById("input").value.split("\n");
+  quiz = [];
+
+  for (let i = 0; i < lines.length; i += 7) {
+    quiz.push({
+      question: lines[i],
+      image: lines[i+1],
+      answers: [lines[i+2], lines[i+3], lines[i+4], lines[i+5]],
+      correct: Number(lines[i+6])
+    });
+  }
+
+  document.getElementById("teacher").style.display = "none";
+  document.getElementById("student").style.display = "block";
+  load();
+}
+
+function load() {
+  document.getElementById("question").innerText = quiz[current].question;
+  document.getElementById("pic").src = quiz[current].image || "";
+  document.querySelectorAll(".answers button").forEach((b,i)=>{
+    b.innerText = quiz[current].answers[i];
+  });
+}
+
+function answer(n) {
+  alert(n === quiz[current].correct ? "🎉 Correct!" : "😊 Try again!");
+  current++;
+  if (current < quiz.length) load();
+  else document.getElementById("student").innerHTML =
+    "<h1>🎉 Finished!</h1><p>Great job!</p>";
+}
+</script>
+
+</body>
+</html>
