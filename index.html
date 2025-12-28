@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <title>Teacher Mode Quiz</title>
@@ -7,57 +7,47 @@
 <style>
 body {
   font-family: Arial, sans-serif;
-  background: #46178f;
-  color: white;
-  margin: 0;
+  background:#46178f;
+  color:white;
+  margin:0;
 }
 
-section {
-  padding: 20px;
-}
-
-#teacher, #student {
-  max-width: 800px;
-  margin: auto;
-}
+section { padding:20px; max-width:800px; margin:auto; }
 
 textarea, input {
-  width: 100%;
-  font-size: 16px;
-  margin-bottom: 10px;
-  padding: 8px;
+  width:100%;
+  padding:8px;
+  font-size:16px;
+  margin-bottom:10px;
 }
 
 button {
-  font-size: 18px;
-  padding: 15px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
+  padding:12px;
+  font-size:16px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
 }
 
-.start {
-  background: #00c985;
-  color: black;
-  width: 100%;
-}
+.start { background:#00c985; width:100%; }
+.paste { background:#1368ce; width:100%; margin-bottom:10px; }
 
 .answers {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
 }
 
-.red { background:#e21b3c; }
-.blue { background:#1368ce; }
-.yellow { background:#f2a900; color:black; }
-.green { background:#26890c; }
+.red{background:#e21b3c;}
+.blue{background:#1368ce;}
+.yellow{background:#f2a900;color:black;}
+.green{background:#26890c;}
 
 img {
-  max-width: 300px;
-  border-radius: 15px;
-  margin: 10px 0;
+  max-width:300px;
+  border-radius:12px;
+  display:block;
+  margin:10px auto;
 }
 </style>
 </head>
@@ -65,36 +55,28 @@ img {
 <body>
 
 <section id="teacher">
-  <h1>👩‍🏫 Teacher Mode (No Code)</h1>
+  <h1>👩‍🏫 Teacher Mode</h1>
 
-  <p><b>One question per block</b></p>
-  <p>Format:</p>
-  <pre>
-Question?
-Image link (or leave empty)
-Answer A
-Answer B
-Answer C
-Answer D
-Correct answer number (0-3)
-  </pre>
+  <textarea id="questionText" rows="2"
+    placeholder="Type your question here"></textarea>
 
-  <textarea id="input" rows="12">
-What animal is this?
-https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg
-Dog
-Cat
-Bird
-Fish
-1
-  </textarea>
+  <button class="paste" onclick="enablePaste()">📋 Paste Picture (Ctrl + V)</button>
+  <img id="preview">
 
+  <input id="a0" placeholder="Answer A">
+  <input id="a1" placeholder="Answer B">
+  <input id="a2" placeholder="Answer C">
+  <input id="a3" placeholder="Answer D">
+
+  <input id="correct" placeholder="Correct answer (0-3)">
+
+  <button class="start" onclick="addQuestion()">➕ Add Question</button>
   <button class="start" onclick="startQuiz()">▶ Start Quiz</button>
 </section>
 
 <section id="student" style="display:none;">
-  <h1 id="question"></h1>
-  <img id="pic" src="">
+  <h1 id="q"></h1>
+  <img id="pic">
   <div class="answers">
     <button class="red" onclick="answer(0)"></button>
     <button class="blue" onclick="answer(1)"></button>
@@ -106,41 +88,6 @@ Fish
 <script>
 let quiz = [];
 let current = 0;
+let tempImage = "";
 
-function startQuiz() {
-  const lines = document.getElementById("input").value.split("\n");
-  quiz = [];
-
-  for (let i = 0; i < lines.length; i += 7) {
-    quiz.push({
-      question: lines[i],
-      image: lines[i+1],
-      answers: [lines[i+2], lines[i+3], lines[i+4], lines[i+5]],
-      correct: Number(lines[i+6])
-    });
-  }
-
-  document.getElementById("teacher").style.display = "none";
-  document.getElementById("student").style.display = "block";
-  load();
-}
-
-function load() {
-  document.getElementById("question").innerText = quiz[current].question;
-  document.getElementById("pic").src = quiz[current].image || "";
-  document.querySelectorAll(".answers button").forEach((b,i)=>{
-    b.innerText = quiz[current].answers[i];
-  });
-}
-
-function answer(n) {
-  alert(n === quiz[current].correct ? "🎉 Correct!" : "😊 Try again!");
-  current++;
-  if (current < quiz.length) load();
-  else document.getElementById("student").innerHTML =
-    "<h1>🎉 Finished!</h1><p>Great job!</p>";
-}
-</script>
-
-</body>
-</html>
+function enablePaste() {
