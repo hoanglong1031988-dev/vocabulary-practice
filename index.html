@@ -2,81 +2,46 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Fun Quiz</title>
+<title>Teacher Mode Quiz</title>
 
 <style>
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
   background: #46178f;
   color: white;
-  text-align: center;
+  margin: 0;
 }
 
-#quiz-box {
-  max-width: 700px;
-  margin: auto;
+section {
   padding: 20px;
 }
 
-img {
-  max-width: 300px;
-  border-radius: 15px;
-  margin-bottom: 15px;
+#teacher, #student {
+  max-width: 800px;
+  margin: auto;
+}
+
+textarea, input {
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 10px;
+  padding: 8px;
+}
+
+button {
+  font-size: 18px;
+  padding: 15px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.start {
+  background: #00c985;
+  color: black;
+  width: 100%;
 }
 
 .answers {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-button {
-  font-size: 20px;
-  padding: 20px;
-  border: none;
-  border-radius: 12px;
-  color: white;
-  cursor: pointer;
-}
-
-.red { background: #e21b3c; }
-.blue { background: #1368ce; }
-.yellow { background: #f2a900; color:black; }
-.green { background: #26890c; }
-
-button:hover {
-  transform: scale(1.05);
-}
-</style>
-</head>
-
-<body>
-
-<div id="quiz-box">
-  <h1 id="question">Question here</h1>
-  <img id="picture" src="">
-  <div class="answers">
-    <button class="red" onclick="checkAnswer(0)"></button>
-    <button class="blue" onclick="checkAnswer(1)"></button>
-    <button class="yellow" onclick="checkAnswer(2)"></button>
-    <button class="green" onclick="checkAnswer(3)"></button>
-  </div>
-</div>
-
-<script>
-const quiz = [
-  {
-    question: "What animal is this?",
-    image: "https://upload.wikimedia.org/wikipedia/commons/3/3a/Cat03.jpg",
-    answers: ["Dog", "Cat", "Bird", "Fish"],
-    correct: 1
-  },
-  {
-    question: "Which one is an apple?",
-    image: "https://upload.wikimedia.org/wikipedia/commons/1/15/Red_Apple.jpg",
-    answers: ["Banana", "Carrot", "Apple", "Orange"],
-    correct: 2
-  }
-];
-</script>
