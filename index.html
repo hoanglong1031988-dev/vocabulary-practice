@@ -1,1 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fun Quiz</title>
 
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #46178f;
+  color: white;
+  text-align: center;
+}
+
+#quiz-box {
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+}
+
+img {
+  max-width: 300px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+button {
+  font-size: 20px;
+  padding: 20px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+}
+
+.red { background: #e21b3c; }
+.blue { background: #1368ce; }
+.yellow { background: #f2a900; color:black; }
+.green { background: #26890c; }
+
+button:hover {
+  transform: scale(1.05);
+}
+</style>
+</head>
+
+<body>
+
+<div id="quiz-box">
+  <h1 id="question">Question here</h1>
+  <img id="picture" src="">
+  <div class="answers">
+    <button class="red" onclick="checkAnswer(0)"></button>
+    <button class="blue" onclick="checkAnswer(1)"></button>
+    <button class="yellow" onclick="checkAnswer(2)"></button>
+    <button class="green" onclick="checkAnswer(3)"></button>
+  </div>
+</div>
+
+<script>
+const quiz = [
+  {
+    question: "What anima
